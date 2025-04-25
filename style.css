@@ -195,9 +195,13 @@ div {
 
 /* Средняя часть */
 
+.middle {
+  padding: 20px;
+}
+
 .middle * {
   /* padding: 0 2rem; */
-  transition: .3s;
+  transition: 0.3s;
 }
 
 .yd {
@@ -288,19 +292,18 @@ div {
 
 .btnfooter {
   width: 100%;
-  
 }
 
 .btnfooter button {
   width: 100%;
-  padding: 1rem .625rem;
+  padding: 1rem 0.625rem;
   font-size: 16px;
   border-radius: 12px;
   font-weight: "Roboto Regular";
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: .625rem;
+  gap: 0.625rem;
   height: 56px;
 }
 

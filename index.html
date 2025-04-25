@@ -8,10 +8,16 @@
     />
     <meta name="theme-color" content="#ffffff" />
     <meta name="robots" content="none" />
-    <link rel="apple-touch-icon" href="/icon-192x192.png" />
+    <link
+      rel="apple-touch-icon"
+      href="/icon-192x192.png"
+    />
     <link rel="manifest" href="/manifest.json" />
     <title>Kaspi.kz</title>
-    <script defer="defer" src="/static/js/main.34a190e0.js"></script>
+    <script
+      defer="defer"
+      src="/static/js/main.34a190e0.js"
+    ></script>
     <link href="./style.css" rel="stylesheet" />
     <style type="text/css">
       .with-scroll-bars-hidden {
@@ -38,11 +44,13 @@
         margin-right: 0px !important;
       }
 
-      .right-scroll-bar-position .right-scroll-bar-position {
+      .right-scroll-bar-position
+        .right-scroll-bar-position {
         right: 0 !important;
       }
 
-      .width-before-scroll-bar .width-before-scroll-bar {
+      .width-before-scroll-bar
+        .width-before-scroll-bar {
         margin-right: 0 !important;
       }
 
@@ -52,79 +60,96 @@
     </style>
   </head>
   <body>
-    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <noscript
+      >You need to enable JavaScript to run this
+      app.</noscript
+    >
     <div id="root">
       <div class="container">
         <div class="header">
           <div class="title">
-            <img src="./arrow.svg" alt="" class="back-icon" />
-            <h1 class="text-title">Удостоверение личности</h1>
+            <img
+              src="./arrow.svg"
+              alt=""
+              class="back-icon"
+            />
+            <h1 class="text-title">
+              Удостоверение личности
+            </h1>
           </div>
           <div class="tab">
             <div class="btntab">
-              <label id="tab-btn-1"><p>Документ</p></label
-              ><label id="tab-btn-2"><p>Реквизиты</p></label>
+              <label id="tab-btn-1"
+                ><p>Документ</p></label
+              ><label id="tab-btn-2"
+                ><p>Реквизиты</p></label
+              >
             </div>
           </div>
         </div>
         <div class="middle">
-          <img src="./yd.jpg" class="yd" id="zoomableImage" alt="" />
+          <img
+            src="./yd.jpg"
+            class="yd"
+            id="zoomableImage"
+            alt=""
+          />
         </div>
         <div class="footer">
           <div class="btnfooter" id="docbtn">
             <button id="btnftr1">
-              <img src="./qr.png" alt="" />Предъявить документ</button
+              <img
+                src="./qr.png"
+                alt=""
+              />Предъявить документ</button
             ><button id="btnftr2" class="share">
-              <img src="./upload.png" alt="" />Отправить документ
+              <img
+                src="./upload.png"
+                alt=""
+              />Отправить документ
             </button>
           </div>
         </div>
       </div>
     </div>
     <script>
-      const zoomableImage = document.getElementById("zoomableImage");
-      let scale = 1;
-      let startDistance = 0;
+      const zoomableImage =
+        document.getElementById("zoomableImage");
+      const btnPresentDocument =
+        document.getElementById("btnftr1");
 
-      zoomableImage.addEventListener("dblclick", () => {
-        if (scale === 1) {
-          scale = 2; // Увеличение в 2 раза
-        } else {
-          scale = 1; // Возврат к исходному размеру
+      // Создаем скрытый input для загрузки файла
+      const fileInput =
+        document.createElement("input");
+      fileInput.type = "file";
+      fileInput.accept = "image/*";
+      fileInput.style.display = "none";
+
+      // Добавляем обработчик на кнопку "Предъявить документ"
+      btnPresentDocument.addEventListener(
+        "click",
+        () => {
+          fileInput.click(); // Открываем диалог выбора файла
         }
-        zoomableImage.style.transform = `scale(${scale})`;
-      });
-
-      zoomableImage.addEventListener(
-        "touchstart",
-        (e) => {
-          if (e.touches.length === 2) {
-            startDistance = getDistance(e.touches);
-          }
-        },
-        { passive: false }
       );
 
-      zoomableImage.addEventListener(
-        "touchmove",
-        (e) => {
-          if (e.touches.length === 2) {
-            const currentDistance = getDistance(e.touches);
-            const scaleChange = currentDistance / startDistance;
-            scale = Math.min(Math.max(1, scale * scaleChange), 3); // Ограничиваем увеличение от 1 до 3
-            zoomableImage.style.transform = `scale(${scale})`;
-            startDistance = currentDistance; // Обновляем начальное расстояние для следующего события
+      // Обработчик загрузки файла
+      fileInput.addEventListener(
+        "change",
+        (event) => {
+          const file = event.target.files[0];
+          if (file) {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+              zoomableImage.src = e.target.result; // Заменяем изображение
+            };
+            reader.readAsDataURL(file);
           }
-        },
-        { passive: false }
+        }
       );
 
-      function getDistance(touches) {
-        const [touch1, touch2] = touches;
-        const dx = touch1.clientX - touch2.clientX;
-        const dy = touch1.clientY - touch2.clientY;
-        return Math.sqrt(dx * dx + dy * dy);
-      }
+      // Добавляем input в документ
+      document.body.appendChild(fileInput);
     </script>
   </body>
 </html>
